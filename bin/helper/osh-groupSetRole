@@ -59,6 +59,12 @@ if (!$result) {
     HEXIT('ERR_BAD_OPTIONS', msg => "Error parsing options: @optwarns");
 }
 
+if (@ARGV) {
+    local $" = ", ";
+    warn_syslog("Spurious arguments on command line: @ARGV");
+    HEXIT('ERR_BAD_OPTIONS', msg => "Spurious arguments on command line: @ARGV");
+}
+
 osh_debug("groupSetRole: checking preconditions");
 $fnret = OVH::Bastion::Plugin::groupSetRole::preconditions(self => $self, account => $account, group => $group, action => $action, type => $type, sudo => 1, silentoverride => 1);
 osh_debug("groupSetRole: checking preconditions result: $fnret");
